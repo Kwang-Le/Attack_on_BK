@@ -23,6 +23,7 @@ class Game:
 
     def draw(self):
         self.win.blit(self.bg, (0, 0))
+        pygame.display.set_caption("Attack_on_BK")
         pygame.display.update()
 
 
