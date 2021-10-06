@@ -43,4 +43,3 @@ class Enemy():
 
     def draw(self):
         self.win.blit(self.image, (self.x, self.y))
-
