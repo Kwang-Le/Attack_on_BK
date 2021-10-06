@@ -1,4 +1,5 @@
 import pygame
+
 import os
 
 class Enemy:
@@ -14,7 +15,7 @@ class Enemy:
         self.y = self.path[0][1]
         self.max_health = 1
         self.current_health = 1
-
+        self.win = win
 
     def draw_images(self, win):
         """Draw enemies' animations hihi.
@@ -26,7 +27,4 @@ class Enemy:
     def draw_health_bar(self, win):
         """Draw enemies' health bar hihi.
         win: game surface."""
-
-
-
 
