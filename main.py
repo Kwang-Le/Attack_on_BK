@@ -16,11 +16,13 @@ class Game:
         self.clicks = []
         self.win = win
 
+
     def run(self):
         run = True
         clock = pygame.time.Clock()
         enemy = Enemy(self.waypoints[len(self.waypoints) - 1], self.waypoints, win)
         tower = Tower()
+
         while run:
             clock.tick(60)
             for event in pygame.event.get():
