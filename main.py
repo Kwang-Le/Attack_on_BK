@@ -2,7 +2,6 @@ import pygame
 from pygame.math import Vector2
 import os
 from Enemy import Enemy
-from tower import Tower
 win = pygame.display.set_mode((800, 450))
 
 
@@ -14,8 +13,6 @@ class Game:
         self.bg = pygame.image.load(os.path.join("asset", "16662.jpg"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.clicks = []
-        self.win = win
-
 
     def run(self):
         run = True
@@ -35,8 +32,6 @@ class Game:
             self.draw()
             enemy.move()
             enemy.draw()
-            tower.draw(self.win)
-            tower.draw_radius(self.win)
             for point in self.waypoints:
                 pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
             pygame.display.flip()
