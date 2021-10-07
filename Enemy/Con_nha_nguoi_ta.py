@@ -2,8 +2,8 @@ import pygame
 import os
 from enemy import Enemy
 
-width = 15
-height = 30
+width = 23
+height = 40
 imgs = []
 for i in range(0,2):
     base_dirname = os.path.dirname(os.path.dirname(__file__))
@@ -13,4 +13,10 @@ for i in range(0,2):
 class Con_nha_nguoi_ta(Enemy):
 
     def __init__(self):
+        super().__init__()
         self.imgs = imgs[:]
+        self.width = 23
+        self.height = 40
+        self.speed = 0.02
+        self.max_health = 5500
+        self.current_health = self.max_health

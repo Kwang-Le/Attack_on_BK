@@ -17,7 +17,7 @@ class Enemy:
         self.y = self.path[0][1]
         self.max_health = 1
         self.current_health = 1
-        self.speed = 0.1
+        self.speed = 0
 
     def draw_images(self, win):
         """Draw enemies' animations hihi.
@@ -59,9 +59,9 @@ class Enemy:
 
     def move(self):
         """Moves enemy."""
-        self.img_num += 1
+        """self.img_num += 1
         if self.img_num >= len(self.imgs):
-            self.img_num = 0
+            self.img_num = 0"""
 
         if self.path_pos < len(self.path):
             x1, y1 = self.path[self.path_pos]
