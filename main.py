@@ -1,7 +1,8 @@
 import pygame
 from pygame.math import Vector2
 import os
-from Enemy import Enemy
+# from Enemy import Enemy
+from SInh_vien import Sinh_vien
 from tower import Tower
 win = pygame.display.set_mode((800, 450))
 
@@ -10,17 +11,18 @@ class Game:
     def __init__(self):
         self.width = 800
         self.height = 450
-        self.waypoints = [(435, 138), (464, 148), (704, 153), (717, 164), (715, 349), (699, 358), (463, 360), (442, 380), (425, 404), (426, 446), (438, 12)]
-        self.bg = pygame.image.load(os.path.join("asset", "16662.jpg"))
+        self.waypoints = [(619, 208), (621, 451), (-15, 210)]
+        self.bg = pygame.image.load(os.path.join("asset", "BK_map.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.clicks = []
+        self.enemies = []
         self.win = win
-
 
     def run(self):
         run = True
         clock = pygame.time.Clock()
-        enemy = Enemy(self.waypoints[len(self.waypoints) - 1], self.waypoints, win)
+        # enemy = Enemy(self.waypoints[len(self.waypoints) - 1], self.waypoints, win)
+        enemy = Sinh_vien(self.waypoints[len(self.waypoints) - 1], self.waypoints, win)
         tower = Tower()
 
         while run:
@@ -29,16 +31,16 @@ class Game:
                 if event.type == pygame.QUIT:
                     run = False
                 pos = pygame.mouse.get_pos()
-                '''if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     self.clicks.append(pos)
-                    print(self.clicks)'''
+                    print(self.clicks)
             self.draw()
+            for point in self.waypoints:
+                pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
             enemy.move()
             enemy.draw()
             tower.draw(self.win)
             tower.draw_radius(self.win)
-            for point in self.waypoints:
-                pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
             pygame.display.flip()
         pygame.quit()
 
