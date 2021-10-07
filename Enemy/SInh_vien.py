@@ -13,5 +13,5 @@ for i in range(0,2):
 class Sinh_vien(Enemy):
 
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         self.imgs = imgs[:]
