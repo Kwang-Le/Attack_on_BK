@@ -12,11 +12,11 @@ for i in range(0,2):
 
 class Thanh_ngu(Enemy):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, waypoints, win):
+        super().__init__(waypoints, win)
         self.imgs = imgs[:]
         self.max_health = 2000
         self.current_health = self.max_health
         self.width = 41
         self.height = 30
-        self.speed = 0.03
+        self.speed = self.init_speed * 3

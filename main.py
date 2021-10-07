@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 import os
-from Enemy import Enemy
+from Enemy.Sinh_vien import Sinh_vien
 from tower import Tower
 win = pygame.display.set_mode((800, 450))
 
@@ -20,7 +20,7 @@ class Game:
     def run(self):
         run = True
         clock = pygame.time.Clock()
-        enemy = Enemy(self.waypoints[len(self.waypoints) - 1], self.waypoints, win)
+        enemy = Sinh_vien(self.waypoints, win)
         tower = Tower()
 
         while run:
@@ -34,7 +34,7 @@ class Game:
                     print(self.clicks)'''
             self.draw()
             enemy.move()
-            enemy.draw()
+            enemy.draw_images()
             tower.draw(self.win)
             tower.draw_radius(self.win)
             for point in self.waypoints:

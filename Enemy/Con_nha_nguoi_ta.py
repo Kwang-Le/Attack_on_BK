@@ -12,11 +12,11 @@ for i in range(0,2):
 
 class Con_nha_nguoi_ta(Enemy):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, waypoints, win):
+        super().__init__(waypoints, win)
         self.imgs = imgs[:]
         self.width = 23
         self.height = 40
-        self.speed = 0.02
+        self.speed = self.init_speed * 3
         self.max_health = 5500
         self.current_health = self.max_health

@@ -1,6 +1,6 @@
 import pygame
 import os
-from enemy import Enemy
+from .enemy import Enemy
 
 width = 18
 height = 40
@@ -12,11 +12,11 @@ for i in range(0,2):
 
 class Sinh_vien(Enemy):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, waypoints, win):
+        super().__init__(waypoints, win)
         self.imgs = imgs[:]
         self.max_health = 1000
         self.current_health = self.max_health
-        self.speed = 0.01
+        self.speed = self.init_speed * 1
         self.width = 18
         self.height = 40

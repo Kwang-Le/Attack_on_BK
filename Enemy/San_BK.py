@@ -12,11 +12,11 @@ for i in range(0,2):
 
 class San_BK(Enemy):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, waypoints, win):
+        super().__init__(waypoints, win)
         self.imgs = imgs[:]
         self.max_health = 4000
         self.current_health = self.max_health
-        self.speed = 0.02
+        self.speed = self.init_speed * 2
         self.width = 19
         self.height = 40
