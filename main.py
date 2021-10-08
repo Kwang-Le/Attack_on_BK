@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 import os
-from Enemy.Sinh_vien import Sinh_vien
+from Enemy.SInh_vien import Sinh_vien
 from tower import Tower
 win = pygame.display.set_mode((800, 450))
 
