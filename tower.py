@@ -8,8 +8,8 @@ class Tower:
     Abstract class for towers
     """
     def __init__(self):
-        self.x = 100
-        self.y = 100
+        self.x = 583
+        self.y = 226-30
         self.width = 0
         self.height = 0
         self.sell_price = [0,0,0]
@@ -17,7 +17,7 @@ class Tower:
         self.level = 1
         self.range = 200
         self.selected = False
-        self.tower_imgs = pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")), (70,70))
+        self.tower_imgs = pygame.transform.scale(pygame.image.load("tower.png"), (70,70))
         self.damage = 1
 
         self.place_color = (0,0,255, 100)

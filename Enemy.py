@@ -5,8 +5,8 @@ import os
 
 class Enemy:
     def __init__(self, pos, waypoints, win):
-        self.width = 15
-        self.height = 30
+        self.width = 30
+        self.height = 100
         # self.image = pygame.image.load(os.path.join("asset", "sinh_vien.png"))
         # self.image = pygame.transform.scale(self.image, (self.width,self.height))
         self.imgs = []
