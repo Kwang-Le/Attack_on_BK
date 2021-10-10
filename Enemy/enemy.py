@@ -12,7 +12,7 @@ class Enemy:
         self.img_num = 0
         self.path = waypoints #path to go through the map, position of center
         self.path_pos = 0
-        self.endpoint = (810, 83)
+        self.endpoint = (934, 700)
         self.x = self.path[0][0] # first x and y of enemy
         self.y = self.path[0][1]
         self.max_health = 100
