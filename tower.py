@@ -8,8 +8,8 @@ class Tower:
     Abstract class for towers
     """
     def __init__(self):
-        self.x = 600
-        self.y = 300
+        self.x = 584
+        self.y = 225
         self.width = 0
         self.height = 0
         self.sell_price = [0,0,0]
@@ -30,7 +30,6 @@ class Tower:
         """
         img = self.tower_imgs[0]
         win.blit(img, (self.x-img.get_width()//2, self.y-img.get_height()//2))
-        pygame.display.update()
 
     def draw_radius(self, win):
         if self.selected:
