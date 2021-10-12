@@ -106,7 +106,6 @@ class Tower:
         self.menu2.x=x
         self.menu2.y=y
         self.menu2.update()
-        pass
 
     def collide(self, otherTower):
         x2 = otherTower.x
