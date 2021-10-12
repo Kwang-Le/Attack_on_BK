@@ -12,8 +12,8 @@ archer_imgs2 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "a
 archer_imgs = [archer_imgs1, archer_imgs2]
 tower_imgs = [tower_imgs1]
 class ArcherTowerLong(Tower):
-    def __init__(self, x, y):
-        super().__init__(x, y)
+    def __init__(self):
+        super().__init__()
         self.tower_imgs = tower_imgs[:]
         self.archer_imgs = archer_imgs[:]
         self.archer_count = 0
@@ -27,7 +27,6 @@ class ArcherTowerLong(Tower):
         self.height = 120
         self.moving = False
         self.name = "archer"
-
 
     def get_upgrade_cost(self):
         """
@@ -83,13 +82,19 @@ class ArcherTowerLong(Tower):
                 enemy_closest.append(enemy)
         enemy_closest.sort(key=lambda x: x.path_pos)
         enemy_closest = enemy_closest[::-1]
+        dead_enemy = []
+        dead_enemy_pos = []
         if len(enemy_closest) > 0:
             first_enemy = enemy_closest[-1]
             if self.archer_count == 40 - 1:
                 if Enemy.is_hit(first_enemy, first_enemy.x, first_enemy.y) == True:
-                    Enemy.damage(first_enemy, 100)
+                    Enemy.damage(first_enemy, 300)
                     money = first_enemy.money * 2
                     if first_enemy.dead() and len(enemies) > 0 :
+                        dead_enemy_pos.append((first_enemy.x, first_enemy.y))
+                        dead_enemy.append(first_enemy)
+                        for i in range(len(dead_enemy)):
+                            dead_enemy[i].draw_explosion(dead_enemy_pos[i][0],dead_enemy_pos[i][1])
                         enemies.remove(first_enemy)
                         pygame.mixer.music.load("05.mp3")
                         pygame.mixer.music.play()

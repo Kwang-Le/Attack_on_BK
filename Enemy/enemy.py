@@ -22,6 +22,10 @@ class Enemy:
         self.frame_passed = 0
         self.win = win
         self.is_flipped = False
+        self.exp_imgs = []
+        self.exp_imgs_num = 0
+        self.add_exp_imgs()
+        self.frame_passed = 0
 
     def draw_images(self):
         """Draw enemies' animations hihi.
@@ -60,6 +64,22 @@ class Enemy:
         if self.current_health <= 0:
             return True
         return False
+
+    def add_exp_imgs(self):
+        for i in range(6):
+            self.exp_imgs.append(pygame.transform.scale(pygame.image.load(
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), "asset/explosion/",
+                             "explosion" + str(i) + ".png")).convert_alpha(), (50,50)))
+
+    def draw_explosion(self, x, y):
+        """ Draw explosion at the position enemy died."""
+        self.frame_passed += 1
+        img = self.exp_imgs[self.exp_imgs_num]
+        draw_pos = (x - img.get_width() / 2, y - img.get_height() / 2)
+        self.win.blit(img, draw_pos)
+        if self.frame_passed % 5 == 0:
+            if self.exp_imgs_num <= 4:
+                self.exp_imgs_num += 1
 
     def flip(self):
         """Flip images."""
