@@ -23,7 +23,8 @@ class ArcherTowerLong(Tower):
         self.left = True
         self.damage = 1
         self.original_damage = self.damage
-        self.width = self.height = 90
+        self.width = 90
+        self.height = 120
         self.moving = False
         self.name = "archer"
 
@@ -37,7 +38,7 @@ class ArcherTowerLong(Tower):
 
     def draw(self, win):
         """
-        draw the arhcer tower and animated archer
+        draw the archer tower and animated archer
         :param win: surface
         :return: int
         """
@@ -84,12 +85,14 @@ class ArcherTowerLong(Tower):
         enemy_closest = enemy_closest[::-1]
         if len(enemy_closest) > 0:
             first_enemy = enemy_closest[-1]
-            if self.archer_count == 30:
+            if self.archer_count == 40 - 1:
                 if Enemy.is_hit(first_enemy, first_enemy.x, first_enemy.y) == True:
                     Enemy.damage(first_enemy, 100)
                     money = first_enemy.money * 2
-                    if first_enemy.dead():
+                    if first_enemy.dead() and len(enemies) > 0 :
                         enemies.remove(first_enemy)
+                        pygame.mixer.music.load("05.mp3")
+                        pygame.mixer.music.play()
 
             if first_enemy.x > self.x and not(self.left):
                 self.left = True
