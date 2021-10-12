@@ -3,7 +3,10 @@ from tower import Tower
 import os
 import math
 from Enemy.enemy import Enemy
-from menu import Menu
+from menu2 import Menu
+
+menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("asset", "menu.png")),(120,70))
+upgrade_btn= pygame.transform.scale(pygame.image.load(os.path.join("asset", "upgrade.png")),(50,50))
 
 
 tower_imgs1 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")),(50, 50))
