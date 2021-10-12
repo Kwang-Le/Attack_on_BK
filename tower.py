@@ -1,23 +1,23 @@
 import pygame
 import os
+from menu import Menu
 import math
-
 
 class Tower:
     """
     Abstract class for towers
     """
     def __init__(self):
-        self.x = 100
-        self.y = 100
+        self.x = 584
+        self.y = 225
         self.width = 0
         self.height = 0
         self.sell_price = [0,0,0]
         self.price = [0,0,0]
         self.level = 1
-        self.range = 200
+        self.range = 0
         self.selected = False
-        self.tower_imgs = pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")), (70,70))
+        self.tower_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")), (70,70))]
         self.damage = 1
 
         self.place_color = (0,0,255, 100)
@@ -28,9 +28,8 @@ class Tower:
         :param win: surface
         :return: None
         """
-        img = self.tower_imgs
+        img = self.tower_imgs[0]
         win.blit(img, (self.x-img.get_width()//2, self.y-img.get_height()//2))
-        pygame.display.update()
 
     def draw_radius(self, win):
         if self.selected:
