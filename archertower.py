@@ -3,17 +3,20 @@ from tower import Tower
 import os
 import math
 from Enemy.enemy import Enemy
-from menu import Menu
+from menu2 import Menu
+
+menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("asset", "menu.png")),(120,70))
+upgrade_btn= pygame.transform.scale(pygame.image.load(os.path.join("asset", "upgrade.png")),(50,50))
 
 
-tower_imgs1 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")),(50, 50))
+tower_imgs1 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower2.png")),(50, 50))
 archer_imgs1 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "archer1.png")),(50, 50))
 archer_imgs2 = pygame.transform.scale(pygame.image.load(os.path.join("asset", "archer2.png")),(50, 50))
 archer_imgs = [archer_imgs1, archer_imgs2]
 tower_imgs = [tower_imgs1]
 class ArcherTowerLong(Tower):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,x,y):
+        super().__init__(x,y)
         self.tower_imgs = tower_imgs[:]
         self.archer_imgs = archer_imgs[:]
         self.archer_count = 0
@@ -27,6 +30,8 @@ class ArcherTowerLong(Tower):
         self.moving = False
         self.name = "archer"
 
+        self.menu2 = Menu(self, self.x, self.y, menu_bg, [2000, 5000, "MAX"])  # tăng cái upgrade lên max
+        self.menu2.add_btn(upgrade_btn, ("Upgrade"))
 
     def get_upgrade_cost(self):
         """
@@ -101,3 +106,23 @@ class ArcherTowerLong(Tower):
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
         return money
+
+class ArcherTowerShort(ArcherTowerLong):
+    def __init__(self, x,y):
+        super().__init__(x, y)
+        self.tower_imgs = tower_imgs[:]
+        self.archer_imgs = archer_imgs[:]
+        self.archer_count = 0
+        self.range = 120
+        self.original_range = self.range
+        self.inRange = False
+        self.left = True
+        self.damage = 2
+        self.original_damage = self.damage
+
+    def get_upgrade_cost(self):
+        return self.menu2.get_item_cost()
+
+        self.menu = Menu(self, self.x, self.y, menu_bg, [2500, 5500, "MAX"])
+        self.menu.add_btn(upgrade_btn, "Upgrade")
+        self.name = "archer2"
