@@ -20,3 +20,12 @@ class San_BK(Enemy):
         self.money = 2
         self.width = 19
         self.height = 40
+        self.min_speed = self.speed / 2
+        self.normal_speed = self.init_speed * 2
+        self.max_speed = self.speed
+
+    def slow(self):
+        self.speed = self.max_speed / 2
+
+    def un_slow(self):
+        self.speed = self.max_speed
