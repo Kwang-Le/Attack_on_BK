@@ -20,12 +20,3 @@ class Sinh_vien(Enemy):
         self.money = 1
         self.width = 18
         self.height = 40
-        self.min_speed = self.speed / 2
-        self.normal_speed = self.init_speed * 3
-        self.max_speed = self.speed
-
-    def slow(self):
-        self.speed = self.max_speed / 2
-
-    def un_slow(self):
-        self.speed = self.max_speed

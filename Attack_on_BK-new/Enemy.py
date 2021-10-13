@@ -8,7 +8,7 @@ class Enemy:
         self.width = 15
         self.height = 30
         self.imgs = []
-        self.img = pygame.transform.scale(pygame.image.load(os.path.join(os.path.dirname(os.path.dirname(__file__)),"asset/Enemy/","Sinhvien0.png")).convert_alpha(), (self.width, self.height))
+        self.img = pygame.transform.scale(pygame.image.load(os.path.join("asset/Enemy/","Sinhvien0.png")).convert_alpha(), (self.width, self.height))
         self.img_num = 0
         self.path = waypoints #path to go through the map, position of center
         self.path_pos = 0
@@ -66,8 +66,6 @@ class Enemy:
         self.img = pygame.transform.flip(self.img, True, False)
 
     def move(self):
-
-
         """Moves enemy."""
         self.frame_passed += 1
         if self.frame_passed == 30:
