@@ -84,7 +84,10 @@ class ArcherTowerLong(Tower):
             dis = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
             if dis < self.range:
                 self.inRange = True
+                enemy.slow()
                 enemy_closest.append(enemy)
+            if dis > self.range:
+                enemy.un_slow()
         enemy_closest.sort(key=lambda x: x.path_pos)
         enemy_closest = enemy_closest[::-1]
         if len(enemy_closest) > 0:
@@ -93,6 +96,7 @@ class ArcherTowerLong(Tower):
                 if Enemy.is_hit(first_enemy, first_enemy.x, first_enemy.y) == True:
                     Enemy.damage(first_enemy, 300)
                     money = first_enemy.money * 2
+                    self.slow_enemy.append(first_enemy)
                     if first_enemy.dead() and len(enemies) > 0 :
                         self.dead_enemy_pos.append((first_enemy.x, first_enemy.y))
                         self.dead_enemy.append(first_enemy)
@@ -110,7 +114,9 @@ class ArcherTowerLong(Tower):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
         for i in range(len(self.dead_enemy)):
             self.dead_enemy[i].draw_explosion(self.dead_enemy_pos[i][0], self.dead_enemy_pos[i][1])
+
         return money
+
 class slow(Tower):
     def __init__(self, x, y):
         super().__init__(x, y)

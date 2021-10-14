@@ -20,3 +20,5 @@ class Sinh_vien(Enemy):
         self.money = 1
         self.width = 18
         self.height = 40
+        self.max_speed = self.speed
+        self.name = "Sinh_vien"

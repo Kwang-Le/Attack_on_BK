@@ -20,3 +20,5 @@ class San_BK(Enemy):
         self.money = 2
         self.width = 19
         self.height = 40
+        self.max_speed = self.speed
+        self.name = "San_BK"

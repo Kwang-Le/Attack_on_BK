@@ -26,6 +26,7 @@ class Enemy:
         self.exp_imgs_num = 0
         self.add_exp_imgs()
         self.frame_passed_exp = 0
+        self.frame_passed_slow = 0
 
     def draw_images(self):
         """Draw enemies' animations hihi.
@@ -87,6 +88,18 @@ class Enemy:
     def flip(self):
         """Flip images."""
         self.img = pygame.transform.flip(self.img, True, False)
+
+    def restore_health(self, percent):
+        """Restore enemy's health."""
+        self.current_health += self.max_health * (1+percent/100)
+
+    def slow(self):
+        """Slows enemy."""
+        self.frame_passed_slow += 1
+        self.speed = self.max_speed / 2
+
+    def un_slow(self):
+        self.speed = self.max_speed
 
     def move(self):
         """Moves enemy."""
