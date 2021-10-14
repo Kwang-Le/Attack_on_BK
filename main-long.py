@@ -46,7 +46,7 @@ class Game:
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
-        self.waypoints = [(32, 295), (931, 294), (934, 650)]
+        self.waypoints1 = [(32, 295), (931, 294), (934, 650)]
         self.waypoints2 = [(652, 9), (654, 293), (933, 297), (932, 594)]
         self.bg = pygame.image.load(os.path.join("asset", "BK_map.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
@@ -106,7 +106,7 @@ class Game:
                 interval = random.choice([1000, 2000, 3000, 4000, 5000])
             # draw everything
             self.draw()
-            for point in self.waypoints:
+            for point in waypoints:
                 pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
                 # loop through enemies
                 # loop through enemies
@@ -122,7 +122,7 @@ class Game:
                     enemy.move()
                     enemy.draw_images()
                     if enemy.y > 600:
-                        self.lives -= 1
+                        #self.lives -= 1
                         self.despawn.append(enemy)
                 # despawn enemies
                 for d in self.despawn:
