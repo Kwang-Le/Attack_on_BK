@@ -117,13 +117,14 @@ class VerticalMenu(Menu):
             self.buttons = []
             self.bg = img  # background
             self.font = pygame.font.SysFont("8-BIT WONDER.TTF", 20)   #thay đổi cỡ text chỗ menu
+            self.font1 = pygame.font.SysFont("SportypoReguler-OVGwe", 20)  # thay đổi cỡ text chỗ menu
 
 
         def add_btn(self, img, name,cost):
             self.items += 1
             #inc_x = self.width / self.items / 2
             btn_x = self.x -40
-            btn_y = self.y+100 +(self.items-1)*80 #khoảng cách của side bar
+            btn_y = self.y+100 +(self.items-1)*90 #khoảng cách của side bar
             self.buttons.append(VerticalButton(btn_x, btn_y, img, name,cost))
 
         def get_item_cost(self, name):
@@ -133,7 +134,13 @@ class VerticalMenu(Menu):
             return -1
 
         def draw(self, win):#vẽ mấy cái trụ
-            win.blit(self.bg, (self.x -15- self.bg.get_width() / 2, self.y +5))  # chỗ thay đổi cái side bar
+            win.blit(self.bg, (self.x -15- self.bg.get_width() / 2, self.y +5))# chỗ thay đổi cái side bar
+            SAMI = self.font1.render('SAMI', 1, (0, 255, 255))
+            win.blit(SAMI, (1105, 235))
+            VLKT = self.font1.render('VLKT', 1, (0, 255, 255))
+            win.blit(VLKT, (1105, 325))
+            LLCT = self.font1.render('LLCT', 1, (0, 255, 255))
+            win.blit(LLCT, (1105, 415))
             for item in self.buttons:
                 item.draw(win)
                 win.blit(star2, (item.x, item.y+ item.height +5))
