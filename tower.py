@@ -23,7 +23,7 @@ class Tower:
         #menu and buttons
         self.menu2 = Menu(self, self.x, self.y, menu_bg,[2000,5000,"MAX"])# tăng cái upgrade lên max
         self.menu2.add_btn(upgrade_btn, ("Upgrade"))
-        self.tower_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower.png")), (70,70))]
+        # self.tower_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower3.png")), (70,70))]
         self.damage = 1
 
 
@@ -35,7 +35,7 @@ class Tower:
         :param win: surface
         :return: None
         """
-        img = self.tower_imgs[0]
+        img = self.tower_imgs
         win.blit(img, (self.x-img.get_width()//2, self.y-img.get_height()//2))
 
         #menu

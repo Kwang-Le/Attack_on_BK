@@ -6,7 +6,7 @@ import os
 # from Enemy import Enemy
 from Enemy.SInh_vien import Sinh_vien
 from Enemy.San_BK import San_BK
-from archertower import ArcherTowerLong
+from archertower import ArcherTowerLong,ArcherTowerShort, Slow
 from menu2 import VerticalMenu
 import random
 pygame.font.init()
@@ -23,7 +23,7 @@ tower1_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "towe
 tower2_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower2.png")),(50,50))# Menu cho
 tower3_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower3.png")),(50,50))# Menu cho
 tower4_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower4.png")),(50,50))# Menu cho
-attack_tower_names = ["archer", "archer2"]
+attack_tower_names = ["archer", "archer2", "slow"]
 class Game:
     def __init__(self):#Các lệnh cơ bản
         pygame.init()
@@ -41,12 +41,12 @@ class Game:
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
-        self.waypoints = [(32, 295), (931, 294), (934, 650)]
+        self.waypoints1 = [(32, 295), (931, 294), (934, 650)]
+        self.waypoints2 = [(652, 9), (654, 293), (933, 297), (932, 594)]
         self.bg = pygame.image.load(os.path.join("asset", "BK_map.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.clicks = []
         self.enemies = []
-        self.despawn = []
         self.win = win
         self.game_running = True
         self.last_spawn = 0
@@ -69,59 +69,43 @@ class Game:
                 self.playing = False
             pygame.mixer.music.stop()
             self.run()
-            # self.display.fill(self.BLACK)
-            # self.draw_text('Thanks for Playing', 20, self.DISPLAY_W/2, self.DISPLAY_H/2)
-            # self.window.blit(self.display, (0,0))
-            #pygame.display.update()
             self.reset_keys()
 
     def run(self):
         clock = pygame.time.Clock()
-        run = True
         interval = 0
         while self.game_running:
             clock.tick(60)
+            waypoints = random.choice([self.waypoints1, self.waypoints2])
             pos = pygame.mouse.get_pos()
             # move moving object
             if self.moving_object:
                 self.moving_object.move(pos[0], pos[1])
+            # check game events
             self.check_events()
             now = pygame.time.get_ticks()
+            # random spawning
             if now - self.last_spawn > interval:
                 self.last_spawn = now
-                self.enemies.append(random.choice([Sinh_vien(self.waypoints, win),San_BK(self.waypoints, win)]))
+                self.enemies.append(random.choice([Sinh_vien(waypoints, win),San_BK(waypoints, win)]))
                 interval = random.choice([1000, 2000, 3000, 4000, 5000])
+            # draw everything
             self.draw()
-            for point in self.waypoints:
-                pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
-
-            # generate enemies
-            for enemy in self.enemies:
-                enemy.move()
-                enemy.draw_images()
-                if enemy.y > 600:
-                    self.lives -= 1
-                    self.despawn.append(enemy)
-            # despawn enemies
-            for d in self.despawn:
-                self.despawn.remove(d)
-            for t in self.towers:
-                self.money += t.attack(self.enemies)
-                t.draw(self.win)
             pygame.display.flip()
         pygame.quit()
 
     def draw(self):
         win.blit(self.bg, (0, 0))
-        # win.fill((255, 255, 255))
-        # pygame.display.set_caption("Attack_on_BK")
         for click in self.clicks:
             pygame.draw.circle(win, (255,0,0), (click[0],click[1]), 5,0)
+
         # draw moving object
         if self.moving_object:
             self.moving_object.draw(self.win)
-        #draw menu
+
+        # draw menu
         self.menu2.draw(self.win)
+
         # draw lives
         text = self.life_font.render(str(self.lives), 1, (255, 0, 0))
         life = pygame.transform.scale(lives_img, (50, 50))
@@ -129,6 +113,7 @@ class Game:
 
         self.win.blit(text, (start_x - text.get_width() - 10, 13))
         self.win.blit(life, (start_x, 10))
+
         # draw money
         text = self.life_font.render(str(self.money), 1, (0, 0, 255))
         money = pygame.transform.scale(star_img, (50, 50))
@@ -136,7 +121,28 @@ class Game:
 
         self.win.blit(text, (start_x - text.get_width() - 10, 75))
         self.win.blit(money, (start_x, 65))
-        #pygame.display.update()
+
+        # generate waypoints(not for production)
+        # for point in self.waypoints:
+            # pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
+
+        # generate enemies
+        despawn = []
+        for enemy in self.enemies:
+            enemy.move()
+            enemy.draw_images()
+            if enemy.y > 600:
+                despawn.append(enemy)
+
+        # despawn enemies
+        for d in despawn:
+            self.enemies.remove(d)
+            self.lives -= 1
+
+        # generate towers
+        for t in self.towers:
+            self.money += t.attack(self.enemies)
+            t.draw(self.win)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -154,7 +160,8 @@ class Game:
                     self.UP_KEY = True
             pos = pygame.mouse.get_pos()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # self.clicks.append(pos)
+                self.clicks.append(pos)
+                print(self.clicks)
                 # check moving object
                 if self.moving_object:
                     print(self.moving_object.name)
@@ -162,8 +169,6 @@ class Game:
                         self.towers.append(self.moving_object)
                     self.moving_object.moving = False
                     self.moving_object = None
-
-                # print(self.clicks)
                 else:
                     # check if click on side menu
                     side_menu_button = self.menu2.get_clicked(pos[0], pos[1])
@@ -184,10 +189,11 @@ class Game:
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
 
+    # add tower when click on menu
     def add_tower(self, name):
         x, y = pygame.mouse.get_pos()
         name_list = ["tower1", "tower2", "tower3", "tower4"]
-        object_list = [ArcherTowerLong(x, y)]
+        object_list = [ArcherTowerLong(x, y),ArcherTowerShort(x,y), Slow(x,y)]
 
         try:
             obj = object_list[name_list.index(name)]

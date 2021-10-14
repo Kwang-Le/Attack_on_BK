@@ -27,6 +27,7 @@ class Enemy:
         self.add_exp_imgs()
         self.frame_passed_exp = 0
 
+
     def draw_images(self):
         """Draw enemies' animations hihi.
         win: game surface."""
@@ -67,8 +68,7 @@ class Enemy:
 
     def add_exp_imgs(self):
         for i in range(6):
-            self.exp_imgs.append(pygame.transform.scale(pygame.image.load(
-                os.path.join(os.path.dirname(os.path.dirname(__file__)), "asset/explosion/",
+            self.exp_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join(os.path.dirname(os.path.dirname(__file__)), "asset/explosion/",
                              "explosion" + str(i) + ".png")).convert_alpha(), (50,50)))
 
     def draw_explosion(self, x, y):
@@ -82,7 +82,6 @@ class Enemy:
         if self.frame_passed_exp % 3 == 0:
             if self.exp_imgs_num <= 4:
                 self.exp_imgs_num += 1
-
 
     def flip(self):
         """Flip images."""
