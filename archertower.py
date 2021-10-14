@@ -96,7 +96,6 @@ class ArcherTowerLong(Tower):
                 if Enemy.is_hit(first_enemy, first_enemy.x, first_enemy.y) == True:
                     Enemy.damage(first_enemy, 300)
                     money = first_enemy.money * 2
-                    self.slow_enemy.append(first_enemy)
                     if first_enemy.dead() and len(enemies) > 0 :
                         self.dead_enemy_pos.append((first_enemy.x, first_enemy.y))
                         self.dead_enemy.append(first_enemy)
