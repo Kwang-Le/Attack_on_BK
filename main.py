@@ -1,15 +1,38 @@
 import pygame
 from menu import *
+<<<<<<< HEAD:main.py
+=======
+
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
 # from pygame.math import Vector2
 import os
 # from Enemy import Enemy
 from Enemy.SInh_vien import Sinh_vien
 from archertower import ArcherTowerLong
+<<<<<<< HEAD:main.py
 import random
 
 pygame.init()
 win = pygame.display.set_mode((800, 450))
 
+=======
+from menu2 import VerticalMenu
+import random
+pygame.font.init()
+
+pygame.init()
+win = pygame.display.set_mode((800, 450))
+menu_bg= pygame.transform.scale(pygame.image.load(os.path.join("asset", "menu.png")),(120,70))
+upgrade_btn= pygame.transform.scale(pygame.image.load(os.path.join("asset", "upgrade.png")),(50,50))
+star_img =pygame.transform.scale(pygame.image.load(os.path.join("asset", "star.png")),(50,50))
+lives_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "heart.png")),(40,50))
+side_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "menu2.png")),(50,50))# Menu cho
+
+tower1_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower1.png")),(50,50))# Menu cho
+tower2_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower2.png")),(50,50))# Menu cho
+tower3_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower3.png")),(50,50))# Menu cho
+tower4_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower4.png")),(50,50))# Menu cho
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
 class Game:
     def __init__(self):#Các lệnh cơ bản
         pygame.init()
@@ -35,6 +58,20 @@ class Game:
         self.win = win
         self.game_running = True
         self.last_spawn = 0
+<<<<<<< HEAD:main.py
+=======
+        self.towers=[]
+        self.selected_tower =None
+        self.money=2000
+        self.lives=100
+        self.menu2= VerticalMenu(self.width -side_img.get_width() - 5,150,side_img)  #Thay đổi tọa độ của side bar
+        self.menu2.add_btn(tower1_img, "tower1", 500)
+        self.menu2.add_btn(tower2_img, "tower2", 500)
+        self.menu2.add_btn(tower3_img, "tower3", 500)
+        self.menu2.add_btn(tower4_img, "tower4", 500)
+        self.attack_towers=[]
+        self.support_towers=[]
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
     def game_loop(self):
         while self.playing:
             self.check_events()
@@ -45,12 +82,20 @@ class Game:
             # self.display.fill(self.BLACK)
             # self.draw_text('Thanks for Playing', 20, self.DISPLAY_W/2, self.DISPLAY_H/2)
             # self.window.blit(self.display, (0,0))
+<<<<<<< HEAD:main.py
             # pygame.display.update()
+=======
+            #pygame.display.update()
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
             self.reset_keys()
 
     def run(self):
         clock = pygame.time.Clock()
+<<<<<<< HEAD:main.py
         archer = ArcherTowerLong()
+=======
+        run =True
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
         interval = 0
         while self.game_running:
             clock.tick(60)
@@ -63,6 +108,11 @@ class Game:
             self.draw()
             for point in self.waypoints:
                 pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
+<<<<<<< HEAD:main.py
+=======
+
+
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
             # generate enemies
             for enemy in self.enemies:
                 enemy.move()
@@ -71,9 +121,15 @@ class Game:
                     self.despawn.append(enemy)
             for d in self.despawn:
                 self.despawn.remove(d)
+<<<<<<< HEAD:main.py
 
             archer.attack(self.enemies)
             archer.draw(self.win)
+=======
+            for t in self.towers:
+                t.attack(self.enemies)
+                t.draw(self.win)
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
             pygame.display.flip()
         pygame.quit()
 
@@ -83,7 +139,15 @@ class Game:
         # pygame.display.set_caption("Attack_on_BK")
         for click in self.clicks:
             pygame.draw.circle(win, (255,0,0), (click[0],click[1]), 5,0)
+<<<<<<< HEAD:main.py
         # pygame.display.update()
+=======
+
+        #draw menu
+        self.menu2.draw(self.win)
+
+        #pygame.display.update()
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
 
     def check_events(self):
         for event in pygame.event.get():
@@ -101,6 +165,10 @@ class Game:
                     self.UP_KEY = True
             pos = pygame.mouse.get_pos()
             if event.type == pygame.MOUSEBUTTONDOWN:
+<<<<<<< HEAD:main.py
+=======
+                self.towers.append(ArcherTowerLong(pos[0], pos[1]))
+>>>>>>> Ngoc-TV2:Attack_on_BK-new/main.py
                 self.clicks.append(pos)
                 print(self.clicks)
 

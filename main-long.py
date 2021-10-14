@@ -6,7 +6,7 @@ import os
 # from Enemy import Enemy
 from Enemy.SInh_vien import Sinh_vien
 from Enemy.San_BK import San_BK
-from archertower import ArcherTowerLong
+from archertower import ArcherTowerLong,ArcherTowerShort, Slow
 from menu2 import VerticalMenu, PlayPauseButton
 import random
 pygame.font.init()
@@ -28,7 +28,7 @@ tower1_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "towe
 tower2_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower2.png")),(50,50))# Menu cho
 tower3_img= pygame.transform.scale(pygame.image.load(os.path.join("asset", "tower3.png")),(50,50))# Menu cho
 
-attack_tower_names = ["archer", "archer2"]
+attack_tower_names = ["archer", "archer2", "slow"]
 class Game:
     def __init__(self):#Các lệnh cơ bản
         pygame.init()
@@ -47,6 +47,7 @@ class Game:
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
         self.waypoints = [(32, 295), (931, 294), (934, 650)]
+        self.waypoints2 = [(652, 9), (654, 293), (933, 297), (932, 594)]
         self.bg = pygame.image.load(os.path.join("asset", "BK_map.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.clicks = []
@@ -89,18 +90,21 @@ class Game:
         interval = 0
         while self.game_running:
             clock.tick(60)
-
+            waypoints = random.choice([self.waypoints1, self.waypoints2])
 
             pos = pygame.mouse.get_pos()
             # move moving object
             if self.moving_object:
                 self.moving_object.move(pos[0], pos[1])
+            # check game events
             self.check_events()
             now = pygame.time.get_ticks()
+            # random spawning
             if now - self.last_spawn > interval:
                 self.last_spawn = now
-                self.enemies.append(random.choice([Sinh_vien(self.waypoints, win),San_BK(self.waypoints, win)]))
+                self.enemies.append(random.choice([Sinh_vien(waypoints, win),San_BK(waypoints, win)]))
                 interval = random.choice([1000, 2000, 3000, 4000, 5000])
+            # draw everything
             self.draw()
             for point in self.waypoints:
                 pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
@@ -163,7 +167,28 @@ class Game:
 
         self.win.blit(text, (start_x - text.get_width() - 10, 75))
         self.win.blit(money, (start_x, 65))
-        #pygame.display.update()
+
+        # generate waypoints(not for production)
+        # for point in self.waypoints:
+            # pygame.draw.rect(win, (90, 200, 40), (point, (4, 4)))
+
+        # generate enemies
+        despawn = []
+        for enemy in self.enemies:
+            enemy.move()
+            enemy.draw_images()
+            if enemy.y > 600:
+                despawn.append(enemy)
+
+        # despawn enemies
+        for d in despawn:
+            self.enemies.remove(d)
+            self.lives -= 1
+
+        # generate towers
+        for t in self.towers:
+            self.money += t.attack(self.enemies)
+            t.draw(self.win)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -220,7 +245,7 @@ class Game:
     def add_tower(self, name):
         x, y = pygame.mouse.get_pos()
         name_list = ["tower1", "tower2", "tower3", "tower4"]
-        object_list = [ArcherTowerLong(x, y)]
+        object_list = [ArcherTowerLong(x, y),ArcherTowerShort(x,y), Slow(x,y)]
 
         try:
             obj = object_list[name_list.index(name)]
